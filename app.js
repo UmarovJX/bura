@@ -5,9 +5,10 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     Bura = require('./bura_modules/Bura'),
     Player = require('./bura_modules/Player');
+var port = process.env.PORT || 8080;
 
 let gameId = 0;
-server.listen(8080);
+server.listen(port);
 console.log('Server is running...');
 
 // routing
