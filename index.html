@@ -141,7 +141,7 @@
         var Game = {};
         Game.enemyCardsCount = 0;
         Game.activedeck = [];
-        var socket = io.connect('http://localhost:8080');
+        var socket = io.connect('/');
 
         socket.on('gamewait', function (data) {
             changeState(gf);
