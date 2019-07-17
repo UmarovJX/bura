@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+    <title>BURA</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <style>
+        .rotatedCard {
+            width: 1em;
+            height: 1.6em;
+            display: inline-block;
+        }
+
+        .main-row {
+            height: 50vh;
+        }
+
+        #movedCardsRow2 {
+            height: 20%
+        }
+
+        #secondRow {
+            height: 55%;
+        }
+
+        #movedCards2 {
+            height: 100%
+        }
+
+        .rotated {
+            writing-mode: tb-rl;
+            transform: rotate(-180deg);
+        }
+
+        .vertical-text {
+            writing-mode: tb-rl;
+        }
+
+
+        #mainField {
+            height: 100%;
+        }
+
+        #myField {
+            height: 20vh;
+        }
+
+        .controls {
+            width: 100%;
+            font-size: 0.7em;
+            margin-bottom: 0.7em;
+        }
+
+
+
+        .enemycard {
+            height: 10vh;
+            background: repeating-linear-gradient(45deg, transparent 0, transparent 25%, tomato 0, tomato 50%), repeating-linear-gradient(transparent 0, transparent 25%, gold 0, gold 50%), white;
+            background-blend-mode: multiply;
+            background-size: 20px 20px;
+            width: 11%;
+        }
+
+        #gf {
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="gf" class="row justify-content-center">
+            <div class="card col-md-6 justify-content-center border border- rounded">
+                <!--second player on the top-->
+                <div id="data2">
+                    <div class="row justify-content-center">
+                        <div class="col text-center" id="name2">name-2</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 offset-3" id="taken2">[__]</div>
+                        <div class="col-6" id="cards2">[_][_][_][_]</div>
+                    </div>
+                </div>
+                <!----------------------------------------------------->
+
+                <!--first player, main field, 3 player-->
+                <div class="row main-row justify-content-center">
+                    <!-- first player-->
+                    <div class="col-3 rotated" id="player_1_col">
+
+
+                        <div class="row">
+                            <div class="col-7 text-right" id="name1">name-1</div>
+                            <div class="col-1" id="name1"></div>
+                            <div class="col-3" id="taken1">[_]</div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center col-12" id="cards1"><span class="mycard border"></span></div>
+                        </div>
+
+                    </div>
+                    <!-------------------------------->
+
+                    <div class="col border" id="mainField">
+                        <div class="row justify-content-center" id="movedCardsRow2">
+                            <div class="col-6 border text-center" id="movedCards2">[_][_][_]</div>
+                        </div>
+
+                        <div class="row" id="secondRow">
+                            <div class="col-3 border rotated text-center">[_][_][_]</div>
+                            <div class="col border"></div>
+                            <div class="col-3 border text-center vertical-text" id="movedCards3">[_][_][_]</div>
+                        </div>
+                    </div>
+
+                    <!--third player-->
+                    <div class="col-3 rotated" id="player_3_col">
+                        <div class="row">
+                            <div class="text-center col-12" id="cards3">[__][__][__][__]</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-7 text-right" id="name3">name-3</div>
+                            <div class="col-1" id="name3"></div>
+                            <div class="col-3" id="taken3">[_]</div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!---my cards-->
+
+                <div class="row" id="myField">
+                    <div class="offset-3 col-6">
+                        <div class="row justify-content-right">
+                            <button class="col-3 col-md-3 controls btn btn-outline-secondary">OK</button>
+
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="offset-md-2 col-md-8 col-sm-12">
+                        <div class="row justify-content-center">
+                            <button class="col-2 col-md-2 controls btn btn-outline-secondary">GO!</button>
+                            <button class="offset-1  col-2 col-md-2 controls btn btn-outline-secondary">Pass</button>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!-- <hr>
+                <div class="row justify-content-center">
+                    <span id="enemyname" class="col-12" style="text-align: center">NAME</span>
+                </div>
+          
+                <div class="row justify-content-center" id="enemycard">
+                </div>
+                <hr>
+
+                <div class="row justify-content-center align-content-center">
+                    <div class="col-2 border rounded mycard m-1" id="koz"></div>
+                    <div class="col ">
+                        <div class="col-12 opencard justify-content-center text-center" id="enemyOpenedCards"></div>
+                        <div class="col-12 d-flex opencard justify-content-center" id="myOpenedCards"></div>
+                    </div>
+                </div>
+                <hr>
+
+                <div class="row">
+                    <div class="col-2">
+                        <button class="controls" id="move">GO!</button>
+                        <button class="controls" id="pass">Pass</button>
+                    </div>
+                    <div class="col d-flex justify-content-center" id="mycard">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  ---------------------------------------------------------------------------->
+
+
+
+
+</body>
+
+</html>
