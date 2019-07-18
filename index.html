@@ -135,8 +135,8 @@
                 <hr>
 
                 <div class="row justify-content-center align-content-center">
-                    <div class="col-1 border border-secondary  rounded mycard m-1" id="koz"></div>
-                    <div class="col ">
+                    <div class="col-2 border border-secondary rounded mycard m-1" id="koz"></div>
+                    <div class="col " id="openedCards">
                         <div class="col-12 opencard justify-content-center text-center cardhold" id="enemyOpenedCards">
                         </div>
                         <div class="col-12 opencard justify-content-center cardhold" id="myOpenedCards"></div>
@@ -157,31 +157,26 @@
 
 
     </div>
-    <!---
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#glassAnimals">
-        Glass Animals Info
-    </button>
-    <div class="modal fade" id="glassAnimals" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Glass Animals</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Everybody Has moven</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    ...
+                <div class="modal-body" id="modalBody">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Track Artist</button>
                 </div>
             </div>
         </div>
     </div>
-------------------------------------------------------------------------------->
 
     <div hidden>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -247,7 +242,9 @@
             }
 
             if (data.round) {
-                alert(data.roundWinner + " takes cards!")
+
+                $("#modalBody").html("<b>" + data.roundWinner + "</b>" + " takes cards!" + "<hr>" + openedCards.innerHTML);
+                $("#myModal").modal("show");
                 Game.enemyCardsCount = Game.mydeck.length;
                 Game.activedeck = [];
                 document.getElementById("enemyOpenedCards").innerHTML = null;
