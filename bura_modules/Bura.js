@@ -13,6 +13,7 @@ module.exports = class Bura {
 
     deckIsBeaten(cards) {
         let q = [6, 7, 8, 9, "J", "Q", "K", 10, "A"];
+
         if (this.currentDeck.length === 0) return true;
 
         cards = this.sortCards(cards);
@@ -20,8 +21,16 @@ module.exports = class Bura {
 
         let beaten = true;
         for (let i = 0; i < cards.length; i++) {
-            if (cards[i][1] === this.currentDeck[i][1] && q.indexOf(cards[i][0]) < q.indexOf(this.currentDeck[i][0])) beaten = false;
-            if (cards[i][1] !== this.currentDeck[i][1] && cards[i][1] !== this.koz[1]) beaten = false;
+            if (cards[i][1] === this.currentDeck[i][1]) {
+                if (q.indexOf(cards[i][0]) < q.indexOf(this.currentDeck[i][0])) {
+                    beaten = false;
+                }
+            }
+            else {
+                if (cards[i][1] !== this.koz[1]) {
+                    beaten = false;
+                }
+            }
         }
         return beaten;
     }

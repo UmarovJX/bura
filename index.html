@@ -11,19 +11,19 @@
             }
 
             .cardhold {
-                height: 50px;
+                height: 56px;
             }
         }
 
         @media screen and (min-width: 361px) and (max-width: 400px) {
             .mycard {
-                width: 36px;
+                width: 38px;
                 height: 54px;
                 font-size: 0.8em;
             }
 
             .cardhold {
-                height: 56px;
+                height: 62px;
             }
         }
 
@@ -35,7 +35,7 @@
             }
 
             .cardhold {
-                height: 66px;
+                height: 72px;
             }
         }
 
@@ -47,7 +47,7 @@
             }
 
             .cardhold {
-                height: 82px;
+                height: 88px;
             }
         }
 
@@ -59,7 +59,7 @@
             }
 
             .cardhold {
-                height: 102px;
+                height: 108px;
             }
         }
 
@@ -78,10 +78,9 @@
             background-size: 20px 20px;
         }
 
-        #gf {
-            height: 100vh;
+        hr {
+            margin: 0;
         }
-
 
 
         #mycard {
@@ -101,61 +100,63 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
-<body class="">
-
-    <div class="container align-content-center">
-        <!---------------------------------------------------------------------------------------->
-        <div id="login" class="row justify-content-center align-content-center">
-            <div class="card col-md-6">
-                <h3 class="card-header">Your name</h3>
-                <input id="data" />
-                <input type="button" id="nameInput" value="Join" />
-            </div>
-        </div>
-        <!------------------------------------------------------------------------------------------->
-
-        <div id="gf" class="row justify-content-center" hidden>
-            <div class="card col-md-6 justify-content-center border border-secondary rounded">
-                <!---scorebar------------------------------------------------->
-                <div class="row justify-content-center">
-                    <div class="col-3 text-center" id="mynamescore">name</div>
-                    <div class="col-2 text-right" id="myscore">0</div>
-                    <div class="col-1 text-center">:</div>
-                    <div class="col-2 text-left" id="enemyscore">0</div>
-                    <div class="col-3 text-center" id="enemynamescore">name</div>
+<body>
+    <div class="container">
+       
+                <!---------------------------------------------------------------------------------------->
+                <div id="login" class="row justify-content-center align-content-center">
+                    <div class="card col-md-6">
+                        <h3 class="card-header">Your name</h3>
+                        <input id="data" />
+                        <input type="button" id="nameInput" value="Join" />
+                    </div>
                 </div>
-                <!----------------------------------------------------->
-                <hr>
-                <div class="row justify-content-center">
-                    <span id="enemyname" class="col-12" style="text-align: center">NAME</span>
-                </div>
-                <!------enemy cards-->
-                <div class="row justify-content-center cardhold" id="enemycard">
-                </div>
-                <hr>
-
-                <div class="row justify-content-center align-content-center">
-                    <div class="col-2 border border-secondary rounded mycard m-1" id="koz"></div>
-                    <div class="col " id="openedCards">
-                        <div class="col-12 opencard justify-content-center text-center cardhold" id="enemyOpenedCards">
+                <!------------------------------------------------------------------------------------------->
+                <div id="gf" class="row justify-content-center" hidden>
+                    <div class="card col-md-6 justify-content-center border border-secondary rounded">
+                        <!---scorebar------------------------------------------------->
+                        <div class="row border-bottom justify-content-center">
+                            <div class="col-3 text-center" id="mynamescore">name</div>
+                            <div class="col-2 text-right" id="myscore">0</div>
+                            <div class="col-1 text-center">:</div>
+                            <div class="col-2 text-left" id="enemyscore">0</div>
+                            <div class="col-3 text-center" id="enemynamescore">name</div>
                         </div>
-                        <div class="col-12 opencard justify-content-center cardhold" id="myOpenedCards"></div>
+                        <!----------------------------------------------------->
+                        <div class="row justify-content-center">
+                            <span id="enemyname" class="col-12" style="text-align: center">NAME</span>
+                        </div>
+                        <!------enemy cards-->
+                        <div class="row justify-content-center cardhold border-bottom" id="enemycard">
+                        </div>
+
+                        <div class="border-bottom row justify-content-center align-content-center">
+                            <div class="col-2">
+                                <div id="koz" class="border border-secondary rounded mycard m-1"></div>
+                            </div>
+                            <div class="col " id="openedCards">
+                                <div class="col-12 opencard justify-content-center cardhold" id="enemyOpenedCards">
+                                </div>
+                                <div class="col-12 opencard justify-content-center cardhold" id="myOpenedCards"></div>
+                            </div>
+                        </div>
+
+                        <div class="row cardhold">
+                            <div class="col d-flex justify-content-center" id="mycard">
+                            </div>
+                        </div>
+
+                        <div class="row p-1 border-top">
+                            <div class="col">
+                                <button class="controls btn btn-secondary" id="move">GO!</button>
+                            </div>
+                            <div class="col">
+                                <button class="controls btn btn-secondary" id="pass">Pass</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <hr>
-
-                <div class="row">
-                    <div class="col-4 col-md-2">
-                        <button class="controls btn btn-secondary" id="move">GO!</button>
-                        <button class="controls  btn btn-secondary" id="pass">Pass</button>
-                    </div>
-                    <div class="col d-flex justify-content-center" id="mycard">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+       
     </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
