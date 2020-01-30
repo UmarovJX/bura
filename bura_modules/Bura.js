@@ -1,4 +1,5 @@
-var Player = require('./Player');
+const Player = require('./Player');
+const comparator = require('./cardComparator');
 module.exports = class Bura {
     constructor() {
         this.deck = this.shuffle(this.fullDeck());
@@ -15,23 +16,34 @@ module.exports = class Bura {
         let q = [6, 7, 8, 9, "J", "Q", "K", 10, "A"];
 
         if (this.currentDeck.length === 0) return true;
-
-        cards = this.sortCards(cards);
-        this.currentDeck = this.sortCards(this.currentDeck);
+        let validShirt = true;
+        cards.forEach(e => {
+            if (!((e[1] !== this.koz[1] && e[1] === this.currentDeck[0][1]) || (e[1] !== this.currentDeck[0][1] && e[1] === this.koz[1]))) validShirt = false;
+        })
+        if (!validShirt) return false;
+        cards.sort(comparator(this.koz))
+        this.currentDeck.sort(comparator(this.koz));
 
         let beaten = true;
-        for (let i = 0; i < cards.length; i++) {
-            if (cards[i][1] === this.currentDeck[i][1]) {
-                if (q.indexOf(cards[i][0]) < q.indexOf(this.currentDeck[i][0])) {
-                    beaten = false;
-                }
-            }
-            else {
-                if (cards[i][1] !== this.koz[1]) {
-                    beaten = false;
-                }
-            }
-        }
+
+        cards.forEach((e, i) => {
+            if (comparator(this.koz)(e, this.currentDeck[i]) > 0) beaten = false;
+        })
+
+
+
+        // for (let i = 0; i < cards.length; i++) {
+        //     if (cards[i][1] === this.currentDeck[i][1]) {
+        //         if (q.indexOf(cards[i][0]) < q.indexOf(this.currentDeck[i][0])) {
+        //             beaten = false;
+        //         }
+        //     }
+        //     else {
+        //         if (cards[i][1] !== this.koz[1]) {
+        //             beaten = false;
+        //         }
+        //     }
+        // }
         return beaten;
     }
 
