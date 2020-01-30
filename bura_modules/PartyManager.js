@@ -29,7 +29,7 @@ module.exports = class PartyManager {
             game.players.forEach((el, i) => {
                 data.push({
                     target: el.id,
-                    event: 'gamestart',
+                    event: 'game-start',
                     data: {
                         name: el.name,
                         turn: game.turn === i,

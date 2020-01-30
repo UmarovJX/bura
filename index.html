@@ -208,10 +208,10 @@
                 document.getElementById("mynamescore").innerHTML = data.name;
                 document.getElementsByClassName("opencard")[0].innerHTML = "!!!--WAITING FOR PARTNER--!!!";
                 Game.myName = data.name;
+                alert(data)
             });
 
             socket.on('invalid-name', function () {
-                alert("Choose another name");
             })
 
             socket.on('game-start', function (data) {
@@ -235,6 +235,7 @@
                 document.getElementById("enemycard").innerHTML = dispEnemyCards(data.cards.length);
 
                 koz.innerHTML = ('<span class="' + ((data.main[1] === '&hearts;' || data.main[1] === '&diams;') ? "text-danger" : "") + '">' + data.main[0] + data.main[1] + '</span>');
+
 
             });
 
