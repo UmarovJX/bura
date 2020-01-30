@@ -239,6 +239,7 @@
             });
 
             socket.on('player-moved', function (data) {
+
                 Game.mydeck = data.cards;
                 Game.turn = data.turn;
                 if (data.name === Game.enemyName) {
@@ -250,8 +251,7 @@
                 }
 
                 if (data.round) {
-
-                    $("#modalBody").html("<b>" + data.roundWinner + "</b>" + " takes cards!" + "<hr>" + openedCards.innerHTML);
+                    $("#modalBody").html("<b>" + data.win + "</b>" + " takes cards!" + "<hr>" + openedCards.innerHTML);
                     $("#myModal").modal("show");
                     Game.enemyCardsCount = Game.mydeck.length;
                     Game.activedeck = [];
@@ -311,9 +311,7 @@
             removeMoveHandler();
         }
         function sendMove(move) {
-            socket.emit(move, {
-                "sentCards": Game.activedeck
-            });
+            socket.emit(move, Game.activedeck);
         }
         function moveTo(event) {
             Game.activedeck.push(Game.mydeck.splice(event.currentTarget.id, 1)[0]);

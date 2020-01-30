@@ -37,14 +37,15 @@ module.exports = class Bura {
 
     processMove(deck) {
         const player = this.players[this.turn];
-        player.removeCards(cards);
-        let beaten = round = false;
+        player.removeCards(deck);
+        let beaten = false,
+            round = false;
         //Обработка бьющего хода
         if (this.deckIsBeaten(deck)) {
             this.moveCurrentDeckToBeaten();
             this.changeCurrentDeck(deck);
             this.setWinningPlayer(); beaten = true;
-        } else { this.addCardsToBeaten(cards); }
+        } else { this.addCardsToBeaten(deck); }
         // обработка конца круга
         if (this.roundIsOver()) {
             this.moveBeatenCardsToWInner();
@@ -54,7 +55,7 @@ module.exports = class Bura {
         } else {
             this.nextPlayer();
         }
-        return { beaten, round, gameOver: this.beatenDeck.length === 36 };
+        return { beaten, round, gameOver: this.beatenDeck.length === 36, name: player.name, win: this.players[this.winningPlayer].name };
     }
 
 

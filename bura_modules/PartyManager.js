@@ -66,20 +66,20 @@ module.exports = class PartyManager {
                     target: el.id,
                     event: 'player-moved',
                     data: {
-                        name: el.name,
+                        win: proc.win,
+                        name: proc.name,
                         movedCards: deck,
                         beaten: proc.beaten,
                         round: proc.round,
                         cards: el.currentCards,
                         turn: game.turn === i,
-                        roundWInner: game.players[game.winningPlayer].name,
                         gameOver: proc.gameOver
                     }
                 })
             })
+            return result;
 
-
-        } else { return [{ targer: player.id, event: 'invalid-move', data: void 0 }] }
+        } else { return [{ target: player.id, event: 'invalid-move', data: void 0 }] }
     }
 }
 
