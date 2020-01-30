@@ -102,61 +102,61 @@
 
 <body>
     <div class="container">
-       
-                <!---------------------------------------------------------------------------------------->
-                <div id="login" class="row justify-content-center align-content-center">
-                    <div class="card col-md-6">
-                        <h3 class="card-header">Your name</h3>
-                        <input id="data" />
-                        <input type="button" id="nameInput" value="Join" />
+
+        <!---------------------------------------------------------------------------------------->
+        <div id="login" class="row justify-content-center align-content-center">
+            <div class="card col-md-6">
+                <h3 class="card-header">Your name</h3>
+                <input id="data" />
+                <input type="button" id="nameInput" value="Join" />
+            </div>
+        </div>
+        <!------------------------------------------------------------------------------------------->
+        <div id="gf" class="row justify-content-center" hidden>
+            <div class="card col-md-6 justify-content-center border border-secondary rounded">
+                <!---scorebar------------------------------------------------->
+                <div class="row border-bottom justify-content-center">
+                    <div class="col-3 text-center" id="mynamescore">name</div>
+                    <div class="col-2 text-right" id="myscore">0</div>
+                    <div class="col-1 text-center">:</div>
+                    <div class="col-2 text-left" id="enemyscore">0</div>
+                    <div class="col-3 text-center" id="enemynamescore">name</div>
+                </div>
+                <!----------------------------------------------------->
+                <div class="row justify-content-center">
+                    <span id="enemyname" class="col-12" style="text-align: center">NAME</span>
+                </div>
+                <!------enemy cards-->
+                <div class="row justify-content-center cardhold border-bottom" id="enemycard">
+                </div>
+
+                <div class="border-bottom row justify-content-center align-content-center">
+                    <div class="col-2">
+                        <div id="koz" class="border border-secondary rounded mycard m-1"></div>
+                    </div>
+                    <div class="col " id="openedCards">
+                        <div class="col-12 opencard justify-content-center cardhold" id="enemyOpenedCards">
+                        </div>
+                        <div class="col-12 opencard justify-content-center cardhold" id="myOpenedCards"></div>
                     </div>
                 </div>
-                <!------------------------------------------------------------------------------------------->
-                <div id="gf" class="row justify-content-center" hidden>
-                    <div class="card col-md-6 justify-content-center border border-secondary rounded">
-                        <!---scorebar------------------------------------------------->
-                        <div class="row border-bottom justify-content-center">
-                            <div class="col-3 text-center" id="mynamescore">name</div>
-                            <div class="col-2 text-right" id="myscore">0</div>
-                            <div class="col-1 text-center">:</div>
-                            <div class="col-2 text-left" id="enemyscore">0</div>
-                            <div class="col-3 text-center" id="enemynamescore">name</div>
-                        </div>
-                        <!----------------------------------------------------->
-                        <div class="row justify-content-center">
-                            <span id="enemyname" class="col-12" style="text-align: center">NAME</span>
-                        </div>
-                        <!------enemy cards-->
-                        <div class="row justify-content-center cardhold border-bottom" id="enemycard">
-                        </div>
 
-                        <div class="border-bottom row justify-content-center align-content-center">
-                            <div class="col-2">
-                                <div id="koz" class="border border-secondary rounded mycard m-1"></div>
-                            </div>
-                            <div class="col " id="openedCards">
-                                <div class="col-12 opencard justify-content-center cardhold" id="enemyOpenedCards">
-                                </div>
-                                <div class="col-12 opencard justify-content-center cardhold" id="myOpenedCards"></div>
-                            </div>
-                        </div>
-
-                        <div class="row cardhold">
-                            <div class="col d-flex justify-content-center" id="mycard">
-                            </div>
-                        </div>
-
-                        <div class="row p-1 border-top">
-                            <div class="col">
-                                <button class="controls btn btn-secondary" id="move">GO!</button>
-                            </div>
-                            <div class="col">
-                                <button class="controls btn btn-secondary" id="pass">Pass</button>
-                            </div>
-                        </div>
+                <div class="row cardhold">
+                    <div class="col d-flex justify-content-center" id="mycard">
                     </div>
                 </div>
-       
+
+                <div class="row p-1 border-top">
+                    <div class="col">
+                        <button class="controls btn btn-secondary" id="move">GO!</button>
+                    </div>
+                    <div class="col">
+                        <button class="controls btn btn-secondary" id="pass">Pass</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -191,80 +191,107 @@
             crossorigin="anonymous"></script>
     </div>
     <script>
-        var Game = {};
+        let Game = {};
         Game.enemyCardsCount = 0;
         Game.activedeck = [];
-        var socket = io.connect('/');
+        document.getElementById('nameInput').addEventListener(
+            'click',
+            addMe, false);
+        let socket;
+        function addMe() {
+            socket = io.connect('/', { reconnection: false });
 
-        socket.on('gamewait', function (data) {
-            changeState(gf);
-            document.getElementById("mynamescore").innerHTML = data.name;
-            document.getElementsByClassName("opencard")[0].innerHTML = "!!!--WAITING FOR PARTNER--!!!";
-            Game.myName = data.name;
-        });
+            socket.emit('addMe', $('#data').val());
 
-        socket.on('invalidName', function () {
-            alert("Choose another name");
-        })
+            socket.on('gamewait', function (data) {
+                changeState(document.getElementById('gf'));
+                document.getElementById("mynamescore").innerHTML = data.name;
+                document.getElementsByClassName("opencard")[0].innerHTML = "!!!--WAITING FOR PARTNER--!!!";
+                Game.myName = data.name;
+            });
 
-        socket.on('gamestart', function (data) {
-            Game.myName = data.name;
-            Game.enemyName = data.enemy;
+            socket.on('invalidName', function () {
+                alert("Choose another name");
+            })
 
-            changeState(gf);
-            Game.enemyCardsCount = 4;
-            document.getElementsByClassName("opencard")[0].innerHTML = "";
-            document.getElementById("mynamescore").innerHTML = data.name;
-            document.getElementById("enemynamescore").innerHTML = data.enemy;
-            document.getElementById("enemyname").innerHTML = data.enemy;
-            Game.turn = data.turn;
-            Game.mydeck = data.cards;
-            document.getElementById("mycard").innerHTML = cardTags(data.cards, data.turn);
-            if (Game.turn) {
-                setClickHandler("mycard", moveTo);
+            socket.on('gamestart', function (data) {
+                Game.myName = data.name;
+                Game.enemyName = data.enemy;
+
+                changeState(document.getElementById('gf'));
+                Game.enemyCardsCount = 4;
+                document.getElementsByClassName("opencard")[0].innerHTML = "";
+                document.getElementById("mynamescore").innerHTML = data.name;
+                document.getElementById("enemynamescore").innerHTML = data.enemy;
+                document.getElementById("enemyname").innerHTML = data.enemy;
+                Game.turn = data.turn;
+                Game.mydeck = data.cards;
+                document.getElementById("mycard").innerHTML = cardTags(data.cards, data.turn);
+                if (Game.turn) {
+                    setClickHandler("mycard", moveTo);
+                    setMoveHandler();
+                }
+
+                document.getElementById("enemycard").innerHTML = dispEnemyCards(data.cards.length);
+
+                koz.innerHTML = ('<span class="' + ((data.main[1] === '&hearts;' || data.main[1] === '&diams;') ? "text-danger" : "") + '">' + data.main[0] + data.main[1] + '</span>');
+
+            });
+
+            socket.on('playerMoved', function (data) {
+                Game.mydeck = data.cards;
+                Game.turn = data.turn;
+                if (data.name === Game.enemyName) {
+                    document.getElementById("enemyOpenedCards").innerHTML = cardTags(data.movedCards, false);
+                    document.getElementById("enemycard").innerHTML = dispEnemyCards(Game.enemyCardsCount = Game.enemyCardsCount - data.movedCards.length);
+                } else {
+                    document.getElementById("mycard").innerHTML = cardTags(Game.mydeck, false);
+                    document.getElementById("myOpenedCards").innerHTML = cardTags(Game.activedeck, false);
+                }
+
+                if (data.round) {
+
+                    $("#modalBody").html("<b>" + data.roundWinner + "</b>" + " takes cards!" + "<hr>" + openedCards.innerHTML);
+                    $("#myModal").modal("show");
+                    Game.enemyCardsCount = Game.mydeck.length;
+                    Game.activedeck = [];
+                    document.getElementById("enemyOpenedCards").innerHTML = null;
+                    document.getElementById("myOpenedCards").innerHTML = null;
+
+                }
+
+                document.getElementById("mycard").innerHTML = cardTags(data.cards, data.turn);
+                document.getElementById("enemycard").innerHTML = dispEnemyCards(Game.enemyCardsCount);
+                if (Game.turn) {
+                    setClickHandler("mycard", moveTo);
+                    setMoveHandler();
+                }
+            })
+
+            socket.on("invalidMove", function () {
+                alert("invalid Move");
                 setMoveHandler();
-            }
+            });
 
-            document.getElementById("enemycard").innerHTML = dispEnemyCards(data.cards.length);
+            socket.on('disconnect', function () {
+                socket = null;
+                changeState(document.getElementById('login'))
+            })
 
-            koz.innerHTML = ('<span class="' + ((data.main[1] === '&hearts;' || data.main[1] === '&diams;') ? "text-danger" : "") + '">' + data.main[0] + data.main[1] + '</span>');
+            socket.on('game-aborted', function () {
 
-        });
+                socket.close();
+                socket = null;
+                changeState(document.getElementById('login'))
+                alert('Partner disconnected! :-(')
+            })
 
-        socket.on('playerMoved', function (data) {
-            Game.mydeck = data.cards;
-            Game.turn = data.turn;
-            if (data.name === Game.enemyName) {
-                document.getElementById("enemyOpenedCards").innerHTML = cardTags(data.movedCards, false);
-                document.getElementById("enemycard").innerHTML = dispEnemyCards(Game.enemyCardsCount = Game.enemyCardsCount - data.movedCards.length);
-            } else {
-                document.getElementById("mycard").innerHTML = cardTags(Game.mydeck, false);
-                document.getElementById("myOpenedCards").innerHTML = cardTags(Game.activedeck, false);
-            }
 
-            if (data.round) {
 
-                $("#modalBody").html("<b>" + data.roundWinner + "</b>" + " takes cards!" + "<hr>" + openedCards.innerHTML);
-                $("#myModal").modal("show");
-                Game.enemyCardsCount = Game.mydeck.length;
-                Game.activedeck = [];
-                document.getElementById("enemyOpenedCards").innerHTML = null;
-                document.getElementById("myOpenedCards").innerHTML = null;
+        }
 
-            }
 
-            document.getElementById("mycard").innerHTML = cardTags(data.cards, data.turn);
-            document.getElementById("enemycard").innerHTML = dispEnemyCards(Game.enemyCardsCount);
-            if (Game.turn) {
-                setClickHandler("mycard", moveTo);
-                setMoveHandler();
-            }
-        })
 
-        socket.on("invalidMove", function () {
-            alert("invalid Move");
-            setMoveHandler();
-        });
 
         function setClickHandler(target, func) {
             Array.from($("#" + target).children("button")).forEach(element => {
@@ -331,14 +358,6 @@
             return string;
         }
 
-        (function () {
-            // when the client clicks SEND
-            document.getElementById('nameInput').addEventListener(
-                'click',
-                function () {
-                    socket.emit('addMe', $('#data').val());
-                }, false);
-        })();
     </script>
 </body>
 

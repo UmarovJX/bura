@@ -1,7 +1,7 @@
 module.exports = class Player {
-    constructor(name, turnNumber) {
+    constructor({ name, id }) {
         this.name = name;
-        this.score = 0;
+        this.id = id
         this.currentCards = [];
         this.takenCards = [];
 
