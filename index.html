@@ -203,18 +203,18 @@
 
             socket.emit('addMe', $('#data').val());
 
-            socket.on('gamewait', function (data) {
+            socket.on('game-wait', function (data) {
                 changeState(document.getElementById('gf'));
                 document.getElementById("mynamescore").innerHTML = data.name;
                 document.getElementsByClassName("opencard")[0].innerHTML = "!!!--WAITING FOR PARTNER--!!!";
                 Game.myName = data.name;
             });
 
-            socket.on('invalidName', function () {
+            socket.on('invalid-name', function () {
                 alert("Choose another name");
             })
 
-            socket.on('gamestart', function (data) {
+            socket.on('game-start', function (data) {
                 Game.myName = data.name;
                 Game.enemyName = data.enemy;
 
@@ -238,7 +238,7 @@
 
             });
 
-            socket.on('playerMoved', function (data) {
+            socket.on('player-moved', function (data) {
                 Game.mydeck = data.cards;
                 Game.turn = data.turn;
                 if (data.name === Game.enemyName) {
@@ -268,7 +268,7 @@
                 }
             })
 
-            socket.on("invalidMove", function () {
+            socket.on("invalid-move", function () {
                 alert("invalid Move");
                 setMoveHandler();
             });

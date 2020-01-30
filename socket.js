@@ -26,7 +26,10 @@ module.exports = function (io) {
             });
         })
 
-        client.on('move', function () { })
+        client.on('move', function (deck) {
+            const data = PartyManager.processMove({ deck, player: client.bura });
+            data.forEach(e => { sockets[e.target].emit(e.event, e.data) })
+        })
     })
 }
 // module.exports = function (io) {

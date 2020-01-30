@@ -35,6 +35,27 @@ module.exports = class Bura {
         return beaten;
     }
 
+    processMove(deck) {
+        const player = this.players[this.turn];
+        player.removeCards(cards);
+        let beaten = round = false;
+        //Обработка бьющего хода
+        if (this.deckIsBeaten(deck)) {
+            this.moveCurrentDeckToBeaten();
+            this.changeCurrentDeck(deck);
+            this.setWinningPlayer(); beaten = true;
+        } else { this.addCardsToBeaten(cards); }
+        // обработка конца круга
+        if (this.roundIsOver()) {
+            this.moveBeatenCardsToWInner();
+            this.fillDecks();
+            this.startNewRound();
+            round = true;
+        } else {
+            this.nextPlayer();
+        }
+        return { beaten, round, gameOver: this.beatenDeck.length === 36 };
+    }
 
 
 
@@ -140,10 +161,10 @@ module.exports = class Bura {
 
         return over;
     }
-    moveIsValid(name, sentDeck) {
+    moveIsValid(id, sentDeck) {
         if (!Array.isArray(sentDeck)) return false;
         if (sentDeck.length === 0) return false;
-        if (this.players[this.turn].name !== name) return false;
+        if (this.players[this.turn].id !== id) return false;
         if (this.currentDeck.length !== 0 && sentDeck.length !== this.currentDeck.length) return false;
         if (this.currentDeck.length === 0) {
             return sentDeck.reduce(function (boole, element, index, array) {

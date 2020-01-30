@@ -18,7 +18,7 @@ module.exports = class PartyManager {
 
         client.bura = {
             id: player.id,
-            gameId: partyId
+            partyId: partyId
         }
         if (party.players.length === 2) {
             lastParty = null;
@@ -41,19 +41,46 @@ module.exports = class PartyManager {
             })
             return data;
         } else {
-            return [{ target: player.id, event: 'gamewait', data: { name: name } }]
+            return [{ target: player.id, event: 'game-wait', data: { name: name } }]
         }
     }
 
     static removePlayer(client) {
         const id = client.bura.id;
-        const party = parties[client.bura.gameId];
+        const party = parties[client.bura.partyId];
         party.players = party.players.filter(p => p.id !== id)
-        if (party.players.length) delete parties[client.bura.gameId];
+        if (party.players.length) delete parties[client.bura.partyId];
         return party.players
     }
 
-    static moveCards() { }
+    static processMove({ deck, player }) {
+        if (!(player && parties[player.partyId])) return [];
+
+        const game = parties[player.partyId].game;
+        const result = [];
+
+        if (game.moveIsValid(player.id, deck)) {
+            const proc = game.processMove(deck);
+            game.players.forEach((el, i) => {
+                result.push({
+                    target: el.id,
+                    event: 'player-moved',
+                    data: {
+                        name: el.name,
+                        movedCards: deck,
+                        beaten: proc.beaten,
+                        round: proc.round,
+                        cards: el.currentCards,
+                        turn: game.turn === i,
+                        roundWInner: game.players[game.winningPlayer].name,
+                        gameOver: proc.gameOver
+                    }
+                })
+            })
+
+
+        } else { return [{ targer: player.id, event: 'invalid-move', data: void 0 }] }
+    }
 }
 
 
