@@ -208,7 +208,6 @@
                 document.getElementById("mynamescore").innerHTML = data.name;
                 document.getElementsByClassName("opencard")[0].innerHTML = "!!!--WAITING FOR PARTNER--!!!";
                 Game.myName = data.name;
-                alert(data)
             });
 
             socket.on('invalid-name', function () {
