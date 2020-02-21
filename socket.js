@@ -1,4 +1,3 @@
-
 const PartyManager = require('./bura_modules/PartyManager');
 const sockets = {};
 

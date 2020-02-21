@@ -79,6 +79,15 @@ module.exports = class PartyManager {
             })
             return result;
 
+
+
+
+
+
+
+
+
+
         } else { return [{ target: player.id, event: 'invalid-move', data: void 0 }] }
     }
 }
