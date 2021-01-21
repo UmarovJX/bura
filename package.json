@@ -13,7 +13,7 @@
     "dependencies": {
         "express": "^4.17.1",
         "rambda": "^4.0.2",
-        "socket.io": "^2.2.0",
+        "socket.io": "^2.4.0",
         "uuid": "^3.4.0"
     }
 }
